@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import rppim.jpa.Dobavljac;
 import rppim.reps.DobavljacRepository;
 
@@ -26,21 +27,25 @@ public class DobavljacRestController {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@ApiOperation(value = "Returns collection of all Dobavljac from database.")
 	@GetMapping("dobavljac")
 	public Collection<Dobavljac> getAll(){
 		return dobavljacRepository.findAll();
 	}
 	
+	@ApiOperation(value = "Returns Dobavljac with id that was forwarded as path variable.")
 	@GetMapping("dobavljac/{id}")
 	public Dobavljac getOne(@PathVariable("id") Integer id) {
 		return dobavljacRepository.getOne(id);
 	}
 	
+	@ApiOperation(value = "Returns Dobavljac with name that was forwarded as path variable.")
 	@GetMapping("dobavljac/naziv/{naziv}")
 	public Collection<Dobavljac> getByNaziv(@PathVariable("naziv") String naziv){
 		return dobavljacRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
+	@ApiOperation(value = "Adds instance of Dobavljac to database.")
 	@PostMapping("dobavljac")
 	public ResponseEntity<HttpStatus> addDobavljac(@RequestBody Dobavljac dobavljac) {
 		dobavljacRepository.save(dobavljac);
@@ -48,6 +53,7 @@ public class DobavljacRestController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 	
+	@ApiOperation(value = "Updates Dobavljac that has id that was forwarded as path variable with values forwarded in Request Body.")
 	@PutMapping("dobavljac/{id}")
 	public ResponseEntity<HttpStatus> updateArtikl(@RequestBody Dobavljac dobavljac, 
 			@PathVariable("id")Integer id){
@@ -61,10 +67,11 @@ public class DobavljacRestController {
 		
 	}
 	
+	@ApiOperation(value = "Deletes Dobavljac with id that was forwarded as path variable.")
 	@DeleteMapping("dobavljac/{id}")
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
 		
-		if(id==-100) {
+		if(id==-100 && !dobavljacRepository.existsById(-100)) {
 			jdbcTemplate.execute("INSERT INTO dobavljac (\"id\", \"naziv\", \"adresa\", \"kontakt\") VALUES (-100, 'Test Naziv', 'Test Adresa', 'Test Kontakt')");
 		}
 		
