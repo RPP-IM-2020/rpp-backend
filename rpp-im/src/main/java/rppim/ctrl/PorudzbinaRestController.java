@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,24 +28,28 @@ public class PorudzbinaRestController {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns collection of all Porudzbina from database.")
 	@GetMapping("porudzbina")
 	public Collection<Porudzbina> getPorudzbine() {
 		return porudzbinaRepository.findAll();
 	}
 
+	@CrossOrigin
 	@ApiOperation(value = "Returns Porudzbina with id that was forwarded as path variable.")
 	@GetMapping("porudzbina/{id}")
 	public Porudzbina getPorudzbina(@PathVariable("id") Integer id) {
 		return porudzbinaRepository.getOne(id);
 	}
 
+	@CrossOrigin
 	@ApiOperation(value = "Returns Porudzbina that are payed.")
 	@GetMapping("porudzbinePlacene")
 	public Collection<Porudzbina> getPorudzbineByPlaceno() {
 		return porudzbinaRepository.findByPlacenoTrue();
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Adds instance of Porudzbina to database.")
 	@PostMapping("porudzbina")
 	public ResponseEntity<HttpStatus> addOne(@RequestBody Porudzbina porudzbina){
@@ -52,6 +57,7 @@ public class PorudzbinaRestController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Updates Porudzbina that has id that was forwarded as path variable with values forwarded in Request Body.")
 	@PutMapping("porudzbina/{id}")
 	public ResponseEntity<HttpStatus> update(@RequestBody Porudzbina porudzbina, @PathVariable("id") Integer id){
@@ -64,6 +70,7 @@ public class PorudzbinaRestController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Deletes Porudzbina with id that was forwarded as path variable.")
 	@DeleteMapping("porudzbina/{id}")
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){

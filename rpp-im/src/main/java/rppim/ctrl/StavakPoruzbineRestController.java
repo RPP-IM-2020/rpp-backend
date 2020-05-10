@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,18 +34,21 @@ public class StavakPoruzbineRestController {
 	@Autowired
 	private PorudzbinaRepository porudzbinaRepository;
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns collection of all StavkaPorudzbine from database.")
 	@GetMapping("stavkaPorudzbine")
 	public Collection<StavkaPorudzbine> getAll() {
 		return stavkaPorudzbineRepository.findAll();
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns StavkaPorudzbine with id that was forwarded as path variable.")
 	@GetMapping("stavkaPorudzbine/{id}")
 	public StavkaPorudzbine getOne(@PathVariable("id") Integer id) {
 		return stavkaPorudzbineRepository.getOne(id);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns collection of StavkePorudzbine for Porudzbina with id that was forwarded as path variable.")
 	@GetMapping("stavkaZaPorudzbinu/{id}")
 	public Collection<StavkaPorudzbine> getAllForPorudzbina(@PathVariable("id") Integer id){
@@ -53,12 +57,14 @@ public class StavakPoruzbineRestController {
 		
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns collection of StavkePorudzbine with price that is lower then price that was forwarded as path variable.")
 	@GetMapping(value = "stavkaPorudzbineCena/{cena}")
 	public Collection<StavkaPorudzbine> getStavkaPorudzbineCena(@PathVariable("cena") BigDecimal cena){
 		return stavkaPorudzbineRepository.findByCenaLessThanOrderById(cena);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Adds instance of StavkaPorudzbine to database.")
 	@PostMapping("stavkaPorudzbine")
 	public ResponseEntity<HttpStatus> addOne(@RequestBody StavkaPorudzbine stavkaPorudzbine){
@@ -67,6 +73,7 @@ public class StavakPoruzbineRestController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Updates StavkaPorudzbine that has id that was forwarded as path variable with values forwarded in Request Body.")
 	@PutMapping("stavkaPorudzbine/{id}")
 	public ResponseEntity<HttpStatus> updateOne(@RequestBody StavkaPorudzbine stavkaPorudzbine, @PathVariable("id") Integer id){
@@ -78,6 +85,7 @@ public class StavakPoruzbineRestController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Deletes StavkaPorudzbine with id that was forwarded as path variable.")
 	@DeleteMapping("stavkaPorudzbine/{id}")
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){

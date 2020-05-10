@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class ArtiklRestController {
 	 * artikala koji će potom u browseru biti prikazani u JSON formatu
 	 */
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns collection of all Artikl from database.")
 	@GetMapping("artikl")
 	public Collection<Artikl> getAll(){
@@ -69,12 +71,14 @@ public class ArtiklRestController {
 	 *  i taj artikal će potom biti prikazan u browseru u JSON formatu. 
 	 */
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns Artikl with id that was forwarded as path variable.")
 	@GetMapping("artikl/{id}")
 	public Artikl getOne(@PathVariable("id") Integer id) {
 		return artiklRepository.getOne(id);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns Artikl with name that was forwarded as path variable.")
 	@GetMapping("artikl/naziv/{naziv}")
 	public Collection<Artikl> getByNaziv(@PathVariable("naziv") String naziv){
@@ -91,6 +95,7 @@ public class ArtiklRestController {
 	 * podataka
 	 */
 	
+	@CrossOrigin
 	@ApiOperation(value = "Adds instance of Artikl to database.")
 	@PostMapping("artikl")
 	public ResponseEntity<HttpStatus> addArtikl(@RequestBody Artikl artikl) {
@@ -109,6 +114,7 @@ public class ArtiklRestController {
 	 * i prosleđenim sadržajem u bazi podataka.
 	 */
 	
+	@CrossOrigin
 	@ApiOperation(value = "Updates Artikl that has id that was forwarded as path variable with values forwarded in Request Body.")
 	@PutMapping("artikl/{id}")
 	public ResponseEntity<HttpStatus> updateArtikl(@RequestBody Artikl artikl, 
@@ -133,6 +139,7 @@ public class ArtiklRestController {
 	 * iz baze podataka.
 	 */
 	
+	@CrossOrigin
 	@ApiOperation(value = "Deletes Artikl with id that was forwarded as path variable.")
 	@DeleteMapping("artikl/{id}")
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){

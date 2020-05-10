@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,24 +28,28 @@ public class DobavljacRestController {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns collection of all Dobavljac from database.")
 	@GetMapping("dobavljac")
 	public Collection<Dobavljac> getAll(){
 		return dobavljacRepository.findAll();
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns Dobavljac with id that was forwarded as path variable.")
 	@GetMapping("dobavljac/{id}")
 	public Dobavljac getOne(@PathVariable("id") Integer id) {
 		return dobavljacRepository.getOne(id);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Returns Dobavljac with name that was forwarded as path variable.")
 	@GetMapping("dobavljac/naziv/{naziv}")
 	public Collection<Dobavljac> getByNaziv(@PathVariable("naziv") String naziv){
 		return dobavljacRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Adds instance of Dobavljac to database.")
 	@PostMapping("dobavljac")
 	public ResponseEntity<HttpStatus> addDobavljac(@RequestBody Dobavljac dobavljac) {
@@ -53,6 +58,7 @@ public class DobavljacRestController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Updates Dobavljac that has id that was forwarded as path variable with values forwarded in Request Body.")
 	@PutMapping("dobavljac/{id}")
 	public ResponseEntity<HttpStatus> updateArtikl(@RequestBody Dobavljac dobavljac, 
@@ -67,6 +73,7 @@ public class DobavljacRestController {
 		
 	}
 	
+	@CrossOrigin
 	@ApiOperation(value = "Deletes Dobavljac with id that was forwarded as path variable.")
 	@DeleteMapping("dobavljac/{id}")
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
